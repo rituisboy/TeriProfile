@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'katanaZero';
+    src: url('/font/visitor2.ttf') format('truetype');
+    /* You can define additional font properties here, like font-weight, font-style, etc. */
+}
+@font-face {
+    font-family: 'pixelFont';
+    src: url('/font/VCR_OSD_MONO_1.001.ttf') format('truetype');
+    /* You can define additional font properties here, like font-weight, font-style, etc. */
+}
+
+.input-field {
+    background-color: transparent;
+    caret-color: hsl(90, 53%, 38%);
+    font-size: 20px-;
+}
+::-webkit-scrollbar {
+    width: 12px;
+  }
+
+::-webkit-scrollbar-thumb {
+background-color: #000814; 
+border-radius: 6px; 
+}
+  
+::-webkit-scrollbar-track {
+background-color: #000814; 
+}
