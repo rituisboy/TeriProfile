@@ -4,8 +4,9 @@ export const BottomCard = () => {
       style={{backgroundColor:"#315C2B"}}
       className="absolute flex justify-center items-center right-3 bottom-3 w-[300px] h-[150px] border-red-300 border-2"
     >
-      <a href="https://www.github.com/rituisboy" target="_blank">
+      <a href="https://github.com/rituisboy/TeriProfile" target="_blank">
         <svg
+        className="hover:animate-bounce-slow"
           xmlns="http://www.w3.org/2000/svg"
           x="0px"
           y="0px"
