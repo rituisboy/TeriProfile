@@ -15,7 +15,7 @@ function App() {
   const [output, setOutput] = useState("");
 
   const [totalCmd, setTotalCmd] = useState<number>(0);
-  const [cmdHistory, setCmdHistory] = useState<string[]>([""]);
+  const [cmdHistory, setCmdHistory] = useState<string[]>([]);
 
   const [showGithub, setShowGithub] = useState<boolean>(false);
 
@@ -50,7 +50,12 @@ function App() {
     */
     if (input) {
       setCmdHistory((prev) => {
-        const updatedHistory = input === "" ? [input] : [...prev, input];
+        let updatedHistory = [];
+        if (prev[0] == "") {
+          updatedHistory = [input];
+        } else {
+          updatedHistory = [...prev, input];
+        }
         // Directly use the updated history to set totalCmd
         setTotalCmd(updatedHistory.length);
         return updatedHistory;
@@ -59,16 +64,19 @@ function App() {
   };
 
   const handleUpArrow = () => {
-    if (totalCmd > 1) {
+    if (totalCmd > 0) {
       setInput(cmdHistory[totalCmd - 1]);
       setTotalCmd((pre) => pre - 1);
     }
   };
   const handleDownArrow = () => {
     if (totalCmd < cmdHistory.length) {
-      setInput(cmdHistory[totalCmd + 1]);
+      
+      setInput(cmdHistory[totalCmd + 1]||'');
       setTotalCmd((pre) => pre + 1);
-    } 
+     }// else {
+    //   setInput('')
+    // }
   };
 
   const handleEnter = (e: React.KeyboardEvent) => {
@@ -139,7 +147,7 @@ function App() {
           overflowY: "auto",
         }}
       >
-        <p  ref={outputRef} dangerouslySetInnerHTML={{ __html: output }}></p>
+        <p ref={outputRef} dangerouslySetInnerHTML={{ __html: output }}></p>
         {showGithub && <Github />}{" "}
         {!output && (
           <div className="text-gray-500">
