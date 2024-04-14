@@ -5,7 +5,7 @@ export const BottomCard = () => {
       style={{ backgroundColor: "#315C2B" }}
       className="absolute flex z-10 bg-gradient-to-r from-purple-500 to-pink-500
                   justify-center items-center right-3 bottom-3 w-[300px] h-[150px] border-red-300 border-2
-                  transition-all duration-500 ease-in-out hover:w-[800px] hover:h-[450px]
+                  transition-all duration-500 ease-in-out hover:w-[400px] hover:h-[225px]
                   "
     >
       <a href="https://github.com/rituisboy/TeriProfile" target="_blank">
