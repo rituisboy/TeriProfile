@@ -6,19 +6,50 @@ import { BottomCard } from "./components/BottomCard";
 import handleTab from "./helper/handleTab";
 
 function App() {
-  const COMMANDS = ["github", "help", "clear", "projects", "whoami"];
+  const COMMANDS = ["github", "help", "clear", "projects", "whoami",'changebg'];
   const COLOR = "#000814";
   const BORDER_COLOR = "#e7c6ff";
+
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLInputElement>(null);
+
+  const [bgImage, setBgImage] = useState("");
   const [input, setInput] = useState<string>("");
   const [output, setOutput] = useState("");
-
   const [totalCmd, setTotalCmd] = useState<number>(0);
   const [cmdHistory, setCmdHistory] = useState<string[]>([]);
-
   const [showGithub, setShowGithub] = useState<boolean>(false);
 
+  const handleCmd = () => {
+    let newOutput = "";
+
+    output ? (newOutput += output + "\n") : null;
+    newOutput += START;
+    newOutput += input;
+    if (input == "changebg") {
+      bgImage == "" ? setBgImage("url('/wallpaper.svg')") : setBgImage('');
+      setInput('')
+      return
+    } else if (input === "help") {
+      newOutput += HELP;
+    } else if (input === "clear") {
+      newOutput = "";
+    } else if (input === "github") {
+      setShowGithub(true);
+      newOutput += GITHUB;
+      setOutput(newOutput);
+      setInput("");
+
+      return;
+    } else {
+      newOutput +=
+        "\n  Unknown Command \n Enter help to get list of available command";
+      setOutput(newOutput);
+      setInput("");
+    }
+    setOutput(newOutput);
+    setInput("");
+  };
   useEffect(() => {
     const handleKeyDown = () => {
       inputRef.current?.focus();
@@ -45,9 +76,8 @@ function App() {
     // }
     /*
     in the abouve code the lenght of cmdHistory is update after exiting if tag 
-    but setTotal is inside if so it updates old 
-    
-    */
+    but setTotal is inside if so it updates old*/
+
     if (input) {
       setCmdHistory((prev) => {
         let updatedHistory = [];
@@ -71,10 +101,9 @@ function App() {
   };
   const handleDownArrow = () => {
     if (totalCmd < cmdHistory.length) {
-      
-      setInput(cmdHistory[totalCmd + 1]||'');
+      setInput(cmdHistory[totalCmd + 1] || "");
       setTotalCmd((pre) => pre + 1);
-     }// else {
+    } // else {
     //   setInput('')
     // }
   };
@@ -97,30 +126,32 @@ function App() {
 
       setShowGithub(false);
       inputRef.current?.focus();
-      let newOutput = "";
 
-      output ? (newOutput += output + " \n ") : null;
-      newOutput += START;
-      newOutput += input;
-      if (input === "help") {
-        newOutput += HELP;
-      } else if (input === "clear") {
-        newOutput = "";
-      } else if (input === "github") {
-        setShowGithub(true);
-        newOutput += GITHUB;
-        setOutput(newOutput);
-        setInput("");
+      handleCmd();
+      // let newOutput = "";
 
-        return;
-      } else {
-        newOutput +=
-          "\n  Unknown Command \n Enter help to get list of available command";
-        setOutput(newOutput);
-        setInput("");
-      }
-      setOutput(newOutput);
-      setInput("");
+      // output ? (newOutput += output + "\n") : null;
+      // newOutput += START;
+      // newOutput += input;
+      // if (input === "help") {
+      //   newOutput += HELP;
+      // } else if (input === "clear") {
+      //   newOutput = "";
+      // } else if (input === "github") {
+      //   setShowGithub(true);
+      //   newOutput += GITHUB;
+      //   setOutput(newOutput);
+      //   setInput("");
+
+      //   return;
+      // } else {
+      //   newOutput +=
+      //     "\n  Unknown Command \n Enter help to get list of available command";
+      //   setOutput(newOutput);
+      //   setInput("");
+      // }
+      // setOutput(newOutput);
+      // setInput("");
     }
   };
 
@@ -139,15 +170,20 @@ function App() {
   return (
     <>
       <div
-        className="overflow-auto h-[calc(100dvh)] p-5 border-4 text-white text-lg whitespace-pre-line"
+        className="overflow-auto h-[calc(100dvh)] p-5 border-4 text-white 
+        
+        text-lg whitespace-pre-line"
         style={{
+          backgroundImage: bgImage,
           backgroundColor: COLOR,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
           fontFamily: "pixelFont",
           borderColor: BORDER_COLOR,
           overflowY: "auto",
         }}
       >
-        <p ref={outputRef} dangerouslySetInnerHTML={{ __html: output }}></p>
+        <div ref={outputRef} dangerouslySetInnerHTML={{ __html: output }}></div>
         {showGithub && <Github />}{" "}
         {!output && (
           <div className="text-gray-500">
@@ -180,10 +216,10 @@ function App() {
             onKeyDown={handleEnter}
             placeholder="help"
           />
-          <p className="flex">
+          <div className="flex">
             {input}{" "}
             <p className="h-[20px] translate-y-1 animate-pulse-fast w-2 bg-white"></p>
-          </p>
+          </div>
         </div>
         <BottomCard />
       </div>

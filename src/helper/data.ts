@@ -11,6 +11,7 @@ const HELP = `\n list of available commands :-
 ⇒ help          - do i have to tell you again
 ⇒ projects      - projects duh
 ⇒ whoami        - stalker.....
+⇒ changebg        - change background image
 `;
 
 const GITHUB = `\n opening github...<a href="https://www.github.com/rituisboy" style="color:#219ebc">https://www.github.com/rituisboy</a> `;
