@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./index.css";
-import { GITHUB, HELP, START, WELCOME } from "./helper/data";
+import { WELCOME } from "./helper/data";
 import { Github } from "./components/Github";
 import { BottomCard } from "./components/BottomCard";
 import handleTab from "./helper/handleTab";
