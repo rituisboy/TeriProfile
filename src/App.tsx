@@ -4,9 +4,17 @@ import { GITHUB, HELP, START, WELCOME } from "./helper/data";
 import { Github } from "./components/Github";
 import { BottomCard } from "./components/BottomCard";
 import handleTab from "./helper/handleTab";
+import { handleCmd } from "./helper/handleCmd";
 
 function App() {
-  const COMMANDS = ["github", "help", "clear", "projects", "whoami",'changebg'];
+  const COMMANDS = [
+    "github",
+    "help",
+    "clear",
+    "projects",
+    "whoami",
+    "changebg",
+  ];
   const COLOR = "#000814";
   const BORDER_COLOR = "#e7c6ff";
 
@@ -20,36 +28,37 @@ function App() {
   const [cmdHistory, setCmdHistory] = useState<string[]>([]);
   const [showGithub, setShowGithub] = useState<boolean>(false);
 
-  const handleCmd = () => {
-    let newOutput = "";
+  // const handleCmd = () => {
+  //   let newOutput = "";
 
-    output ? (newOutput += output + "\n") : null;
-    newOutput += START;
-    newOutput += input;
-    if (input == "changebg") {
-      bgImage == "" ? setBgImage("url('/wallpaper.svg')") : setBgImage('');
-      setInput('')
-      return
-    } else if (input === "help") {
-      newOutput += HELP;
-    } else if (input === "clear") {
-      newOutput = "";
-    } else if (input === "github") {
-      setShowGithub(true);
-      newOutput += GITHUB;
-      setOutput(newOutput);
-      setInput("");
+  //   output ? (newOutput += output + "\n") : null;
+  //   newOutput += START;
+  //   newOutput += input;
+  //   if (input == "changebg") {
+  //     bgImage == "" ? setBgImage("url('/wallpaper.svg')") : setBgImage('');
+  //     setInput('')
+  //     return
+  //   } else if (input === "help") {
+  //     newOutput += HELP;
+  //   } else if (input === "clear") {
+  //     newOutput = "";
+  //   } else if (input === "github") {
+  //     setShowGithub(true);
+  //     newOutput += GITHUB;
+  //     setOutput(newOutput);
+  //     setInput("");
 
-      return;
-    } else {
-      newOutput +=
-        "\n  Unknown Command \n Enter help to get list of available command";
-      setOutput(newOutput);
-      setInput("");
-    }
-    setOutput(newOutput);
-    setInput("");
-  };
+  //     return;
+  //   } else {
+  //     newOutput +=
+  //       "\n  Unknown Command \n Enter help to get list of available command";
+  //     setOutput(newOutput);
+  //     setInput("");
+  //   }
+  //   setOutput(newOutput);
+  //   setInput("");
+  // };
+
   useEffect(() => {
     const handleKeyDown = () => {
       inputRef.current?.focus();
@@ -127,8 +136,15 @@ function App() {
       setShowGithub(false);
       inputRef.current?.focus();
 
-      handleCmd();
-      // let newOutput = "";
+      handleCmd({
+        input,
+        output,
+        bgImage,
+        setBgImage,
+        setInput,
+        setShowGithub,
+        setOutput,
+      });
 
       // output ? (newOutput += output + "\n") : null;
       // newOutput += START;
